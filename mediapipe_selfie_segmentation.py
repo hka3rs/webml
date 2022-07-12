@@ -16,6 +16,14 @@ cap = cv2.VideoCapture(0)
 with mp_selfie_segmentation.SelfieSegmentation(
     model_selection=1) as selfie_segmentation:
   bg_image = None
+  
+  # modifications for chosing a background image
+  IMAGE_FILES = [r"D:/MyTrips/Kolad/IMG20220317142634.jpg"]
+  for idx, file in enumerate(IMAGE_FILES):
+    bg_image = cv2.imread(file)
+  bg_image = cv2.resize(bg_image, (640,480), interpolation=cv2.INTER_AREA)
+  bg_image = cv2.GaussianBlur(bg_image,(11,11),0)
+
   while cap.isOpened():
     success, image = cap.read()
     if not success:
